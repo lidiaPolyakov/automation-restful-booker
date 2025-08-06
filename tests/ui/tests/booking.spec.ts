@@ -41,28 +41,37 @@ test.describe("Booking page tests", () => {
     await bookingPage.expectLocationSectionToBeVisible();
   });
 
-  test("Should redirect to single room with the right price", async () => {
+  test("Should redirect to single room with the right price and date", async () => {
     await bookingPage.fillBookingForm(1);
     await expect(bookingPage.page.getByText("£100 x 13 nights")).toBeVisible();
     await expect(bookingPage.page.getByText("1340")).toBeVisible();
     await bookingPage.reserveNowButton.click();
-    await bookingPage.expectBookingConfirmation("Single", "£100 x 13 nights", "1340");
+    await expect(bookingPage.page.getByText("Booking Confirmed")).toBeVisible();
+    await expect(
+      bookingPage.page.getByText("2025-08-08 - 2025-08-21")
+    ).toBeVisible();
   });
 
-  test("Should redirect to suite room with the right price", async () => {
-    await bookingPage.fillBookingForm(3);
-    await expect(bookingPage.page.getByText("£225 x 13 nights")).toBeVisible();
-    await expect(bookingPage.page.getByText("2965")).toBeVisible();
-    await bookingPage.reserveNowButton.click();
-    await bookingPage.expectBookingConfirmation("Suite", "£225 x 13 nights", "2965");
-  });
-
-  test("Should redirect to double room with the right price", async () => {
+  test("Should redirect to double room with the right price and date", async () => {
     await bookingPage.fillBookingForm(2);
     await expect(bookingPage.page.getByText("£150 x 13 nights")).toBeVisible();
     await expect(bookingPage.page.getByText("1990")).toBeVisible();
     await bookingPage.reserveNowButton.click();
-    await bookingPage.expectBookingConfirmation("Double", "£150 x 13 nights", "1990");
+    await expect(bookingPage.page.getByText("Booking Confirmed")).toBeVisible();
+    await expect(
+      bookingPage.page.getByText("2025-08-08 - 2025-08-21")
+    ).toBeVisible();
+  });
+
+  test("Should redirect to suite room with the right price and date", async () => {
+    await bookingPage.fillBookingForm(3);
+    await expect(bookingPage.page.getByText("£225 x 13 nights")).toBeVisible();
+    await expect(bookingPage.page.getByText("2965")).toBeVisible();
+    await bookingPage.reserveNowButton.click();
+    await expect(bookingPage.page.getByText("Booking Confirmed")).toBeVisible();
+    await expect(
+      bookingPage.page.getByText("2025-08-08 - 2025-08-21")
+    ).toBeVisible();
   });
 
   test.describe("Contact tests in booking page", () => {
@@ -79,7 +88,7 @@ test.describe("Booking page tests", () => {
         "i want to book a room",
         "i want to book a room, but im want to check whats your cancellation policy, please contact me as soon as possible."
       );
-      
+
       await expect(
         bookingPage.page.getByText(
           "Thanks for getting in touch Israel Israeli!"
