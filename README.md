@@ -6,7 +6,8 @@ This test automation framework provides end-to-end testing coverage for the [Res
 
 3. **Install Playwright browsers**
 ```bash
-cd restful-booker-automation
+cd automation-restful-booker
+npm install
 npx playwright install
 ```
 
